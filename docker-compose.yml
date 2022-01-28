@@ -6,7 +6,7 @@ services:
     image: "actionspec/linkprowler:1.0"
     restart: on-failure
     volumes:
-      - C:\Users\rickc\Documents\crawls:/use/src/app/crawls
+      - C:\Users\rickc\Documents\crawls:/usr/src/app/crawls
     environment:
       SELENIUM_URL: "http://selenium:4444"
       TARGET_URL: "http://example.com"
