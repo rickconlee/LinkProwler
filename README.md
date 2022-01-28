@@ -2,6 +2,9 @@
 
 LinkProwler is a tool written in Python that is used to scan a target website for links. LinkProwler will scan all links on a target site website using Selenium Webdriver (image downloaded separately), then store that data in a JSON file that you can digest later. 
 
+Docker Hub repo can be found here: https://hub.docker.com/repository/docker/actionspec/linkprowler
+or run `$ docker pull actionspec/linkprowler:[tag]`
+
 # Usage 
 
 ## Standalone container: 
@@ -70,4 +73,25 @@ The output from the program will bein JSON format. Each run will create a unique
         "https://github.com/actionspec"
     ]
 }
+```
+
+## Using Compose 
+
+TODO - the startup order needs a little work, and we need to add a graceful exit. That being said, you can use this docker-compose template to run it. Once the link crawler is complete, you can hit `CTRL-C` to kill it. replace the variables below for your targeted run, save it, then run `docker-compose up`
+
+```
+version: "3.9"
+services:
+  selenium:
+    image: "selenium/standalone-chrome:91.0.4472.114-chromedriver-91.0.4472.101"
+  linkprowler:
+    image: "actionspec/linkprowler:[TAG]"
+    restart: on-failure
+    volumes:
+      - [/local/directory/for/results]:/usr/src/app/crawls
+    environment:
+      SELENIUM_URL: "http://selenium:4444"
+      TARGET_URL: "http://example.com"
+    depends_on:
+      - "selenium"
 ```
