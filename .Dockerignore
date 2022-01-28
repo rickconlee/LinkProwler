@@ -1,4 +1,4 @@
 *.ipynb
 README.md 
 errata.txt
-crawls/*
+crawls/*.json
