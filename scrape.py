@@ -33,6 +33,9 @@ external_urls = set()
 total_urls_visited = 0
 
 def grab_page_selenium(target):
+    """
+    Uses Selenium to grab a page to process for links. 
+    """
     # Specify the options that we want for Selenium
     options = Options()
     options.add_argument("--headless")
