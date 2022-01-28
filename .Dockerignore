@@ -1,0 +1,4 @@
+*.ipynb
+README.md 
+errata.txt
+crawls/*.json
