@@ -1,4 +1,4 @@
-import json 
+import json
 from urllib.parse import urlparse, urljoin
 from bs4 import BeautifulSoup
 import colorama
@@ -8,11 +8,18 @@ from selenium import webdriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.chrome.options import Options
 import argparse
+import os
+
+# Get environment variables
+cont_selenium_url = os.environ.get('SELENIUM_URL')
+cont_target_url = os.environ.get('TARGET_URL')
+
 
 # grab command line argument for the target site we will crawl for links.
 parser = argparse.ArgumentParser(description='Scraping Target')
 parser.add_argument('--url', dest='target_url', type=str, help='Target URL to scrape for URLs')
-parser.add_argument('--selenium', dest='selenium_url', type=str, help='URL of Selenium Instance in http(s)://URL:PORT format')
+parser.add_argument('--selenium_url', dest='selenium_url', type=str, help='URL of Selenium Instance in http(s)://URL:PORT format')
+parser.add_argument('--container', dest='is_container', type=bool, help='User does not need to adjust this. If this is running continaerized, this will run with TRUE. If it is not running as a container, FALSE is implied.')
 args = parser.parse_args()
 
 # Read some inputs from a config file...
@@ -44,7 +51,11 @@ def grab_page_selenium(target):
     options.add_argument("--window-size=1024,768")
     options.add_argument("--disable-notifications")
     options.add_argument("--incognito")
-    driver = webdriver.Remote(options=options, command_executor=args.selenium_url, keep_alive=True)
+    # Determine if we are running in containerized mode or not. 
+    if args.is_container is True:
+        driver = webdriver.Remote(options=options, command_executor=cont_selenium_url, keep_alive=True)
+    else:
+        driver = webdriver.Remote(options=options, command_executor=args.selenium_url, keep_alive=True)
     driver.get(target)
     # Store page source in variable so we can hand it off. 
     html = driver.page_source
@@ -116,7 +127,10 @@ def crawl(url, max_urls=30):
 if __name__ == "__main__":
 
     time_int = int(time.time())
-    crawl(args.target_url)
+    if args.is_container is True:
+        crawl(cont_target_url)
+    else:
+        crawl(args.target_url)
     print("[+] Total Internal links:", len(internal_urls))
     print("[+] Total External links:", len(external_urls))
     print("[+] Total URLs:", len(external_urls) + len(internal_urls))
