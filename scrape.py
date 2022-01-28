@@ -12,6 +12,7 @@ import argparse
 # grab command line argument for the target site we will crawl for links.
 parser = argparse.ArgumentParser(description='Scraping Target')
 parser.add_argument('--url', dest='target_url', type=str, help='Target URL to scrape for URLs')
+parser.add_argument('--selenium', dest='selenium_url', type=str, help='URL of Selenium Instance in http(s)://URL:PORT format')
 args = parser.parse_args()
 
 # Read some inputs from a config file...
@@ -43,7 +44,7 @@ def grab_page_selenium(target):
     options.add_argument("--window-size=1024,768")
     options.add_argument("--disable-notifications")
     options.add_argument("--incognito")
-    driver = webdriver.Remote(options=options, command_executor='http://localhost:4444', keep_alive=True)
+    driver = webdriver.Remote(options=options, command_executor=args.selenium_url, keep_alive=True)
     driver.get(target)
     # Store page source in variable so we can hand it off. 
     html = driver.page_source
