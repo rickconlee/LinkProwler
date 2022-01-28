@@ -1,0 +1,52 @@
+Sources, notes and other things that are important for this project to work... 
+
+
+1/26/2021 updates and notes:: 
+
+Creating the cleanup program. This will be important so we can search through
+results and emsure that we are not handing garbage to search. 
+
+REGEXP in python: 
+
+Documentation on Python 're': https://docs.python.org/3/library/re.html
+
+Decided against putting all the target sites we want to crawl in a config file. 
+We will be passing that through as a command line argument instead. 
+
+
+
+# This is where we will be getting our whitepapers from: 
+https://whitepaperdatabase.com/category/whitepapers/
+
+
+Using requests library to download some PDF's froma  website: https://www.codementor.io/@aviaryan/downloading-files-from-urls-in-python-77q3bs0un
+
+Article on crawling links: https://www.thepythoncode.com/article/extract-all-website-links-python
+
+Getting HTML from selenium: https://pythonbasics.org/selenium-get-html/
+Honorable mention to the previous article: https://towardsdatascience.com/build-a-scalable-web-crawler-with-selenium-and-pyhton-9c0c23e3ebe5
+This stack overflow is where I figured out how to keep Selenium from crashing: https://stackoverflow.com/questions/53902507/unknown-error-session-deleted-because-of-page-crash-from-unknown-error-cannot/53970825
+
+Some Honorable mentions before I systematically execute once-useful browser tabs: 
+
+https://stackoverflow.com/questions/45448994/wait-page-to-load-before-getting-data-with-requests-get-in-python-3
+https://docs.python-requests.org/projects/requests-html/en/latest/
+https://stackoverflow.com/questions/63653201/pyppeteer-errors-timeouterror-navigation-timeout-exceeded-8000-ms-exceeded
+https://stackoverflow.com/questions/8049520/web-scraping-javascript-page-with-python
+https://stackoverflow.com/questions/56259855/beautiful-soup-cant-extract-links
+https://www.thepythoncode.com/article/extract-all-website-links-python
+
+
+#### Update 1/25 EOD: 
+
+After I got everything working the way that I like it... I wanted to save the results. 
+Here are some resources I used... 
+
+Convert sets into lists: https://www.geeksforgeeks.org/python-convert-set-into-a-list/
+Some stuff I looked at to serialize the lists into JSON: 
+https://appdividend.com/2019/11/13/how-to-convert-python-list-to-json-example/
+https://www.w3schools.com/python/python_json.asp
+https://stackoverflow.com/questions/8230315/how-to-json-serialize-sets
+https://stackabuse.com/reading-and-writing-json-to-a-file-in-python/
+https://pythonexamples.org/python-list-to-json/
+https://stackoverflow.com/questions/12309269/how-do-i-write-json-data-to-a-file
