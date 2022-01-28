@@ -3,6 +3,9 @@
 # Juypter notebooks that were used as a firing range. 
 *.ipynb
 
+# Dont commit crawl results
+crawls/*
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
