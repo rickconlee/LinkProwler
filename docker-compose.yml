@@ -1,0 +1,14 @@
+version: "3.9"
+services:
+  selenium:
+    image: "selenium/standalone-chrome:91.0.4472.114-chromedriver-91.0.4472.101"
+  linkprowler:
+    image: "actionspec/linkprowler:1.0"
+    restart: on-failure
+    volumes:
+      - C:\Users\rickc\Documents\crawls:/use/src/app/crawls
+    environment:
+      SELENIUM_URL: "http://selenium:4444"
+      TARGET_URL: "http://example.com"
+    depends_on:
+      - "selenium"
