@@ -4,11 +4,18 @@ from bs4 import BeautifulSoup
 import colorama
 #from requests_html import HTMLSession
 import time
+import datetime
 from selenium import webdriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.chrome.options import Options
 import argparse
 import os
+import re
+
+
+# What time is it Mr. Fox? 
+thetimeis = datetime.datetime.now()
+dt_string = thetimeis.strftime("%m-%d-%Y-%H-%M")
 
 # Get environment variables
 cont_selenium_url = os.environ.get('SELENIUM_URL')
@@ -21,6 +28,13 @@ parser.add_argument('--url', dest='target_url', type=str, help='Target URL to sc
 parser.add_argument('--selenium_url', dest='selenium_url', type=str, help='URL of Selenium Instance in http(s)://URL:PORT format')
 parser.add_argument('--container', dest='is_container', type=bool, help='User does not need to adjust this. If this is running continaerized, this will run with TRUE. If it is not running as a container, FALSE is implied.')
 args = parser.parse_args()
+
+# Fetch -just- the domain name, so we can use it to name the output file
+if args.is_container is True:
+    domain_name = re.match(r'https?://([A-Za-z_0-9.-]+).*', cont_target_url)
+else:
+    domain_name = re.match(r'https?://([A-Za-z_0-9.-]+).*', args.target_url)
+
 
 # Read some inputs from a config file...
 with open('scrapeconfig.json') as config_file:
@@ -143,5 +157,5 @@ if __name__ == "__main__":
         "External URLs":external_url_list
     }
     # Write everything to a JSON file so we can process the results outside this module
-    with open(f'crawls/{time_int}-urlscrawled.json', 'w', encoding='utf-8') as f:
+    with open(f'crawls/{dt_string}-{domain_name.group(1)}.json', 'w', encoding='utf-8') as f:
         json.dump(json_data1, f, ensure_ascii=True, indent=4)
